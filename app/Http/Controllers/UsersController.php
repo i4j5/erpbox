@@ -11,11 +11,16 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Jetstream\DeleteUser;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
     public function index()
     {
+        if (!Auth::user()->can('read user')) {
+            abort(403);
+        }
+
         $users = User::all();
 
         return view('users.index', compact('users'));
@@ -23,6 +28,10 @@ class UsersController extends Controller
 
     public function create()
     {
+        if (!Auth::user()->can('create user')) {
+            abort(403);
+        }
+
         $roles = Role::all();
 
         return view('users.create', compact('roles'));
@@ -30,6 +39,10 @@ class UsersController extends Controller
 
     public function store(Request $request, CreateNewUser $newUser)
     {
+        if (!Auth::user()->can('create user')) {
+            abort(403);
+        }
+
         $user = $newUser->create($request->input());
 
         $user->assignRole($request->input('roles'));
@@ -39,11 +52,18 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
+        if (!Auth::user()->can('read user')) {
+            abort(403);
+        }
         return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
+        if (!Auth::user()->can('update user')) {
+            abort(403);
+        }
+
         $roles = Role::all();
         $userRoleArray = [];
 
@@ -56,9 +76,12 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user, UpdateUserProfileInformation $userProfileInformation)
     {
+        if (!Auth::user()->can('update user')) {
+            abort(403);
+        }
 
         $userProfileInformation->update($user, $request->input());
-        
+
         $user->syncRoles($request->input('roles'));
 
         return redirect()->route('users.index');
@@ -66,6 +89,10 @@ class UsersController extends Controller
 
     public function destroy(User $user, DeleteUser $deleteUser)
     {
+        if (!Auth::user()->can('updete delete')) {
+            abort(403);
+        }
+
         $deleteUser->delete($user);
 
         return redirect()->route('users.index');
