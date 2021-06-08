@@ -20,3 +20,12 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+// Для авторизованных пользователей
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+
+    Route::resource('documents', App\Http\Controllers\DocumentController::class);
+
+    Route::resource('users', \App\Http\Controllers\UsersController::class);
+
+});

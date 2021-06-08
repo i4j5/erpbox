@@ -14,13 +14,29 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-        Permission::create(['name' => 'edit user']);
-        Permission::create(['name' => 'delete user']);
+        // create read update delete
         Permission::create(['name' => 'create user']);
+        Permission::create(['name' => 'read user']);
+        Permission::create(['name' => 'update user']);
+        Permission::create(['name' => 'delete user']);
+
+        Permission::create(['name' => 'create document template']);
+        Permission::create(['name' => 'read document template']);
+        Permission::create(['name' => 'update document template']);
+        Permission::create(['name' => 'delete document template']);
+        
+        Permission::create(['name' => 'create document']);
+        Permission::create(['name' => 'read document']);
+        Permission::create(['name' => 'update document']);
+        Permission::create(['name' => 'delete document']);
 
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
 
-        Role::create(['name' => 'user']);
+        $role = Role::create(['name' => 'user']);
+        $role->givePermissionTo([
+            'create document',
+            'read document',
+        ]);
     }
 }
