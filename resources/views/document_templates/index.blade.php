@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Документы
+            Шаблоны
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="block mb-8">
-                <a href="{{ route('documents.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Создать документ</a>
+                <a href="{{ route('document-templates.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Создать</a>
             </div>
             <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -18,10 +18,13 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ID
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Название
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Шаблон
+                                    Описание
                                 </th>
                                 <th scope="col" class="relative px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -29,17 +32,21 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($documents as $document)
+                        @foreach ($documentTemplates as $template)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                {{ $document->title }} #{{ $document->id }}
+                                    {{ $template->id }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {{ $template->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $document->template_id }}
+                                    {{ $template->description }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="{{ route('documents.show', $document->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Скачать</a>
-                                    <form class="inline-block" action="{{ route('documents.destroy', $document->id) }}" method="POST" onsubmit="return confirm('Ты уверен?');">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="{{ route('document-templates.show', $template->id) }}" class="text-blue-600 hover:text-blue-900 mb-2 mr-2">Скачать</a>
+                                    <a href="{{ route('document-templates.edit', $template->id) }}" class="text-indigo-600 hover:text-indigo-900 mb-2 mr-2">Изменить</a>
+                                    <form class="inline-block" action="{{ route('document-templates.destroy', $template->id) }}" method="POST" onsubmit="return confirm('Ты уверен?');">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="text-red-600 hover:text-red-900 mb-2 mr-2" value="Удалить">

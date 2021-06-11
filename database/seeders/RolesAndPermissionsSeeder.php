@@ -18,7 +18,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'create user']);
         Permission::create(['name' => 'read user']);
         Permission::create(['name' => 'update user']);
-        Permission::create(['name' => 'delete user']);
 
         Permission::create(['name' => 'create document template']);
         Permission::create(['name' => 'read document template']);
@@ -30,6 +29,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'update document']);
         Permission::create(['name' => 'delete document']);
 
+        Permission::create(['name' => 'read your document']);
+        Permission::create(['name' => 'delete your document']);
+
         $role = Role::create(['name' => 'super-admin']);
         $role->givePermissionTo(Permission::all());
 
@@ -37,6 +39,8 @@ class RolesAndPermissionsSeeder extends Seeder
         $role->givePermissionTo([
             'create document',
             'read document',
+            'read your document',
+            'delete your document',
         ]);
     }
 }

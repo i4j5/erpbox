@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\SeedersRolesAndPermissionsSeeder;
+use Database\Seeders\RolesAndPermissionsSeeder;
+use Database\Seeders\DocumentTemplateVariableTypeSeeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,5 +28,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user->assignRole('super-admin');
+        $this->command->info('Админ создан. email: admin@admin.admin password: admin');
+
+        $this->call(DocumentTemplateVariableTypeSeeder::class);
     }
 }

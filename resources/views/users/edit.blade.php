@@ -22,8 +22,6 @@
                             <p class="text-sm text-red-600">{{ $errors->updateProfileInformation->first('name') }}</p>
                         </div>
 
-
-
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <label for="email" class="block font-medium text-sm text-gray-700">Email</label>
                             <input type="email" name="email" id="email" class="form-input rounded-md shadow-sm mt-1 block w-full"
@@ -38,17 +36,17 @@
                         </div>
 
                         <div class="px-4 py-5 bg-white sm:p-6">
-                            <label for="roles" class="block font-medium text-sm text-gray-700">Роли</label>
-                            <select name="roles[]" id="roles" class="form-multiselect block rounded-md shadow-sm mt-1 block w-full" multiple="multiple">
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->name }}"{{ in_array( $role->name, old('roles', $userRoleArray)) ? ' selected' : '' }}>
-                                        {{  $role->name}}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('roles')
-                                <p class="text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <label class="block font-medium text-sm text-gray-700" for="permissions">
+                                Роли
+                            </label>
+                            <div class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            @foreach($roles as $role)
+                                <label class="flex items-center">
+                                    <input {{ in_array($role->name, old('roles', $userRoleArray)) ? ' checked' : '' }} name="roles[]" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" wire:model.defer="createApiTokenForm.permissions" value="{{$role->name}}">
+                                    <span class="ml-2 text-sm text-gray-600">{{$role->name}}</span>
+                                </label>
+                            @endforeach
+                            </div>
                         </div>
 
                         <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-right sm:px-6">

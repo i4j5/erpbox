@@ -15,12 +15,21 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents')">
-                        Документы
-                    </x-jet-nav-link>
+                    
+                    @can('read document')
+                        <x-jet-nav-link href="{{ route('documents.index') }}" :active="request()->routeIs('documents.*')">
+                            Документы
+                        </x-jet-nav-link>
+                    @endcan
+
+                    @can('read document template')
+                        <x-jet-nav-link href="{{ route('document-templates.index') }}" :active="request()->routeIs('document-templates.*')">
+                            Шаблоны документов
+                        </x-jet-nav-link>
+                    @endcan
 
                     @can('read user')
-                        <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users')">
+                        <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
                             Пользователи
                         </x-jet-nav-link>
                     @endcan

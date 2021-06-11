@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DocumentTemplateVariable;
 
-class DocumentTamplate extends Model
+class DocumentTemplate extends Model
 {
     use HasFactory;
 
@@ -14,4 +15,9 @@ class DocumentTamplate extends Model
         'description',
         'user_id'
     ];
+
+    public function variables()
+    {
+        return $this->belongsToMany(DocumentTemplateVariable::class);
+    }
 }

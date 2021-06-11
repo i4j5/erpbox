@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('documents', App\Http\Controllers\DocumentController::class);
 
+    Route::resource('document-templates', App\Http\Controllers\DocumentTemplateController::class);
+
     Route::resource('users', \App\Http\Controllers\UsersController::class);
 
 });
